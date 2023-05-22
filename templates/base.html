@@ -1,0 +1,31 @@
+{% load static %}
+<html>
+	<head>
+		<title>Click by ThemeWagon</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="{% static 'assets/css/main.css'%}" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css'%}" /></noscript>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+	</head>
+	
+	<body class="is-loading-0 is-loading-1 is-loading-2">
+		{% include 'partials/_sidebar.html' %}
+        {% block content %}
+        {% endblock content %}
+		{% include 'partials/_footer.html' %}
+
+			</div>
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js'%}"></script>
+			<script src="{% static 'assets/js/skel.min.js'%}"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="{% static 'assets/js/main.js'%}"></script>
+			<script type="text/javascript">
+			</script>
+	</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section id="thumbnails">
+    
+<article>
+    <a class="thumbnail" href="{% static 'images/fulls/camera.jpg'%}" data-position="left center"></a>
+</article>
+</section>
+    <article>
+        <form method='post' enctype='multipart/form-data' class="text-center">
+            <div class="form-field">
+            {% csrf_token %}
+            <table class="my-form-table">
+                {% for field in form %}
+                    <tr>
+                        <th style="color: black">{{ field.label_tag }}</th>
+                        <td>{{ field }}</td>
+                        <td>{{ field.errors }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div style="display: inline-block">
+            <button type="submit" class="btn btn-primary mt-2">Salvar</button>
+            </div>
+        </form>
+    </article>
+{% endblock content %}

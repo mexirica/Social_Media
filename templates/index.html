@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+		<!-- Main -->
+			<div id="main">
+				<!-- Thumbnail -->
+					<section id="thumbnails">
+						{% for card in object_list %}
+						<article>
+							<a class="thumbnail" href="{{card.photo.url}}" data-position="left center"><img src="{{card.photo.url}}" alt="" /></a>
+							<h2>{{card.title}}</h2>
+							<p>{{card.subtitle}}</p>
+							<p><a  href="{% url 'profile' username=card.user %}">{{card.user}}</a></p>
+						</article>
+						{%endfor%}
+					</section>
+
+{% endblock content %}

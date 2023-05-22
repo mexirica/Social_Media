@@ -1,0 +1,18 @@
+
+{% load static %}
+<footer id="footer">
+    {% if user.is_authenticated %}
+    <ul class="copyright text-center" style="display: flex; justify-content: space-between">
+        <li><a href="{% url 'profile' user.username %}" class="icon fa-solid fa-user"><span class="label">Profile</span></a></li>
+        <li><a href="{% url 'account_logout' %}" class="icon fa-solid fa-power-off"><span class="label">Logout</span></a></li>
+        <li><a href="{% url 'index' %}" class="icon fa-solid fa-home"><span class="label">Home</span></a></li>
+    </ul>
+        {%else%}
+    <div class="form-group text-center">
+        <button class="form-control btn btn-primary submit px-3">
+            <a href="{% url 'account_login' %}" style="color: white; text-decoration: none;">Logar</a>
+          </button>          
+    </div>
+</footer>
+</div>
+{% endif %}

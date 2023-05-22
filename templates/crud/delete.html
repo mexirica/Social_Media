@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section id="thumbnails">
+    
+    <article>
+        <a class="thumbnail" href="{{ card.photo.url}}" data-position="left center"></a>
+    </article>
+    </section>
+        <article>
+            <form method='post' enctype='multipart/form-data' class="text-center">
+                <div class="form-field bold">
+                {% csrf_token %}
+                <p>Você tem certeza que quer deletar {{card.title}} ? </p>
+                <div style="display: inline-block">
+                    <button onclick="window.history.back()" class="btn btn-primary mt-2">Voltar</button>
+                    <button type="submit" class="btn btn-primary mt-2">Deletar</button>
+                </div>
+            </form>
+        </article>
+{% endblock content %}

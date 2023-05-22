@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section id="thumbnails">
+    <article>
+        <a class="thumbnail" href="{{ card.photo.url }}" data-position="left center"></a>
+        <h2>{{card.title}}</h2>
+        <p>{{card.subtitle}}</p>
+        <p>{{card.created_at}}</p>
+        <p><a href="{% url 'profile' username=card.user %}">{{card.user}}</a></p>
+    </article>
+</section>
+{% endblock content %}

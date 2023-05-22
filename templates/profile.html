@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+				<!-- Thumbnail -->
+				{% if photos %}
+				<section id="thumbnails">
+						{% for card in photos %}
+						<article>
+							<a class="thumbnail" href="{{ card.photo.url }}" data-position="left center"><img src="{{ card.photo.url }}" alt="" /></a>
+							<h2>{{card.title}}</h2>
+							{% if card.user == userlogado %}
+							<a href="{% url 'update' username=card.user pk=card.id%}" class="icon fa-black fa-pencil"><span class="label">Edit</span></a>
+							<a href="{% url 'delete' username=card.user pk=card.id%}" class="icon fa-solid fa-trash" style='margin-left: 10px'><span class="label">Exclude</span></a>
+							{% endif %}
+							<p>{{card.subtitle}}</p>
+							<p>{{card.created_at}}</p>
+						</article>
+						{%endfor%}
+					</section>
+					{% else %}
+					<p class='text-center mt-5' style='font-size: x-large;display: flex; justify-content: center; align-items: center; height: calc(100vh - (412px + 210px))'><strong>Nenhuma foto encontrada.</strong></p>
+					<section id="thumbnails">
+					<article>
+						<a class="thumbnail" href="{% static 'images/fulls/fundo.jpg'%}" data-position="left center"></a>
+						<h2>Você não tem nenhuma foto</h2>
+						<p>Poste algumas!</p>
+					</article>
+				</section>
+					{% endif %}
+
+{% endblock content %}
+

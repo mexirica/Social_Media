@@ -1,0 +1,43 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load account %}
+
+{% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}
+
+
+{% block content %}
+<section class="py-5 d-flex justify-content-center align-items-center" style="background-image: url('{% static 'images/bg.jpg' %}'); height: 100vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="d-flex align-items-center justify-content-center h-100"> <!-- Adicione essa div para centralizar o conteúdo verticalmente e horizontalmente -->
+                    <!-- CUSTOM BLOCKQUOTE -->
+                    <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded">
+<h1>{% trans "Confirm E-mail Address" %}</h1>
+{% if confirmation %}
+
+{% with confirmation.email_address.user.get_full_name as user_full_name %}
+
+<p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_full_name }}.{% endblocktrans %}</p>
+{% endwith %}
+
+<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+{% csrf_token %}
+    <button type="submit" class="form-control btn btn-primary submit px-3">{% trans 'Confirm' %}</button>
+</form>
+{% else %}
+
+{% url 'account_email' as email_url %}
+
+<p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
+
+{% endif %}
+                    </blockquote><!-- END -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

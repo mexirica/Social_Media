@@ -1,0 +1,23 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load static %}
+{% block head_title %}{% trans "Verify Your E-mail Address" %}{% endblock %}
+
+{% block content %}
+<section class="py-5 d-flex justify-content-center align-items-center" style="background-image: url('{% static 'images/bg.jpg' %}'); height: 100vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="d-flex align-items-center justify-content-center h-100"> <!-- Adicione essa div para centralizar o conteúdo verticalmente e horizontalmente -->
+                    <!-- CUSTOM BLOCKQUOTE -->
+                    <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded">
+                        <p>{% blocktrans %}We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. If you do not see the verification e-mail in your main inbox, check your spam folder. Please contact us if you do not receive the verification e-mail within a few minutes.{% endblocktrans %}</p>
+                        <a href="{% url 'index' %}" class="form-control btn btn-primary submit d-flex align-items-center justify-content-center">Voltar</a>
+                    </blockquote><!-- END -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,32 @@
+<div id="main" >
+
+    <!-- Header -->
+    <header id="header" >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mt-5">
+                    <div class="input-group">
+                        <form action="{% url 'buscar' %}">
+                        <input class="form-control py-2 rounded-pill mr-1 pr-5" style='color: black' type="search" placeholder="Buscar..." id="example-search-input">
+                        <span class="input-group-append">
+                            <button class="btn rounded-pill border-0 ml-n5" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        <div class="logohead">
+            <img src="{{ user.profile_picture.url }}" alt="" width="150" height='150'>
+        </div>	
+            <h1 class="text-center">{{user.first_name}} {{user.last_name}}</h1>
+            <ul class="icons text-center">
+                {% if user == userlogado %}
+                <li><a href="{% url 'add' username=user.username %}" class="icon fa-solid fa-plus"><span class="label">Add</span></a></li>
+                {% else %}
+                <button id="btn-seguir" type="button" class="btn btn-info" style='color: white'>Seguir</button>
+                {%endif%}
+            </ul>
+
+    </header>

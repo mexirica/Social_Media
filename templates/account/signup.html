@@ -1,0 +1,71 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load socialaccount %}
+
+{% block head_title %}{% trans "Sign Up" %}{% endblock %}
+
+{% block content %}
+<body class="img js-fullheight" style="background-image: url('{% static 'images/bg.jpg' %}');">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-2">
+					<h2 class="heading-section">Criar conta</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+		      	<h3 class="mb-4 text-center">Junte-se a nós!</h3>
+              <form  class="signup" method="POST" id='signup_form' enctype="multipart/form-data" action= "{% url 'account_signup' %}"> 
+                {% csrf_token %}
+		      		<div class="form-group">
+		      			<input type="text" name='username' class="form-control" placeholder="Nome de usuário" required>
+		      		</div>
+		      		<div class="form-group">
+		      			<input type="text" name='first_name' class="form-control" placeholder="Nome" required>
+		      		</div>
+					<div class="form-group">
+		      			<input type="text" name='last_name' class="form-control" placeholder="Sobrenome" required>
+		      		</div>
+                <div class="form-group">
+		      			<input type="email" name='email' class="form-control" placeholder="Email" required>
+		      		</div>
+	            <div class="form-group">
+	              <input id="password-field1" name='password1' type="password" class="form-control" placeholder="Senha" required>
+	              <span toggle="#password-field1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	            </div>
+              	            <div class="form-group">
+	              <input id="password-field2" name='password2' type="password" class="form-control" placeholder="Repita sua senha" required>
+	              <span toggle="#password-field2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	            </div>
+				<div class="form-group">
+					<label class='text-center'>Foto de perfil</label>
+		  			<input type="file" name='profile_picture' class="form-control" placeholder="Foto de perfil">
+		    	</div>
+	            <div class="form-group">
+	            	<button type="submit" class="form-control btn btn-primary submit px-3">Cadastrar</button>
+	            </div>
+			</form>		
+			<div class='d-flex row justify-content-center '>
+						{% if form.errors %}
+							{% for field in form %}
+								{% for error in field.errors %}
+									<div class="col-12 alert alert-danger rounded">
+										<strong>{{ error|escape }}</strong>
+									</div>
+								{% endfor %}
+							{% endfor %}
+							{% for error in form.non_field_errors %}
+								<div class="col-12 alert alert-danger rounded">
+									<strong>{{ error|escape }}</strong>
+								</div>
+							{% endfor %}
+						{% endif %}
+				</div>
+			</div>
+		</div>
+
+	</section>
+{% endblock %}
