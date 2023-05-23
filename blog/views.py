@@ -1,9 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView, View
 from .models import Photo, CustomUser
 from .forms import PhotoForm,PhotoEditForm
-
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
 class ProfileView(LoginRequiredMixin, ListView):
     template_name = 'profile.html'
@@ -13,17 +15,59 @@ class ProfileView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         # Filtra as fotos pelo usuário
         username = self.kwargs.get('username')
-        user = CustomUser.objects.get(username=username)
+        user = get_object_or_404(CustomUser, username=username)
         return Photo.objects.filter(user=user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         username = self.kwargs.get('username')
-        user = CustomUser.objects.get(username=username)
+        user = get_object_or_404(CustomUser, username=username)
         context['userlogado'] = self.request.user
         context['user'] = user
         return context
     
+    def follow(self, request, userlogado, user):
+        userlogado.following += 1
+        user.followers += 1
+
+        # Adicionar o usuário à lista de "whos_following"
+        whos_following_list = userlogado.get_whos_following_list()
+        if user.username not in whos_following_list:
+            whos_following_list.append(user.username)
+            userlogado.whos_following = ','.join(whos_following_list)
+
+        userlogado.save()
+        user.save() 
+        return HttpResponseRedirect(reverse('profile', args=[self.kwargs['username']]))
+
+    def unfollow(self, request, userlogado, user):
+        userlogado.following -= 1
+        user.followers -= 1
+
+        # Remover o usuário da lista de "whos_following"
+        whos_following_list = userlogado.get_whos_following_list()
+        if user.username in whos_following_list:
+            whos_following_list.remove(user.username)
+            userlogado.whos_following = ','.join(whos_following_list)
+
+        userlogado.save()
+        user.save()        
+        return HttpResponseRedirect(reverse('profile', args=[self.kwargs['username']]))
+
+    def post(self, request, *args, **kwargs):
+        action = request.POST.get('action')  # Captura a ação a ser executada (follow ou unfollow)
+        username = self.kwargs.get('username')
+        user = get_object_or_404(CustomUser, username=username)
+        userlogado = self.request.user
+
+        if action == 'follow':
+            return self.follow(request, userlogado, user)
+        else:
+            return self.unfollow(request, userlogado, user)
+
+
+
+
 
 class BuscarView(ListView):
     model = Photo
