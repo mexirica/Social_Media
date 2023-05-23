@@ -1,8 +1,7 @@
 from django.conf import settings
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from django.views.generic import TemplateView
-from blog.views import ProfileView, IndexView, AddView, Update,DetalharFoto, DeletePhoto
+from blog.views import ProfileView, AddView, Update, DeletePhoto
 from django.conf.urls.static import static
 
 urlpatterns = [

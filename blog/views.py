@@ -5,7 +5,8 @@ from .models import Photo, CustomUser
 from .forms import PhotoForm,PhotoEditForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+
 
 class ProfileView(LoginRequiredMixin, ListView):
     template_name = 'profile.html'
@@ -100,6 +101,7 @@ class IndexView(ListView):
         queryset = super().get_queryset()
         return queryset.order_by('?')
 
+
 class AddView(CreateView):
     model = Photo
     template_name = 'add'
@@ -108,6 +110,13 @@ class AddView(CreateView):
     def get_success_url(self):
         username = self.request.user
         return reverse_lazy('profile', kwargs={'username': username})
+    
+    def dispatch(self, request, *args, **kwargs):
+        username = self.kwargs['username']
+        user = get_object_or_404(CustomUser, username=username)
+        if self.request.user != user:
+            return redirect('permission-denied')  # Redirecionar para a página de permissão negada
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
