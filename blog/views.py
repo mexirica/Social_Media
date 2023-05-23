@@ -65,6 +65,7 @@ class ProfileView(LoginRequiredMixin, ListView):
         else:
             return self.unfollow(request, userlogado, user)
 
+        return super().post(request, *args, **kwargs)
 
 
 
@@ -92,7 +93,7 @@ class IndexView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user'] = self.request.user
+        context['userlogado'] = self.request.user
         return context
     
     def get_queryset(self):

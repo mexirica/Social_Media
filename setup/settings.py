@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'channels',
 ]
 
 
@@ -99,6 +100,15 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+ASGI_APPLICATION = '<seu_projeto>.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
+
 
 
 AUTHENTICATION_BACKENDS = [
@@ -156,6 +166,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = "index"
 ACCOUNT_FORMS = {'signup': 'blog.forms.CustomSignupForm'}
 AUTH_USER_MODEL = 'blog.CustomUser'
 

@@ -21,11 +21,15 @@ from django.views.generic import TemplateView
 from blog.views import ProfileView, IndexView, DetalharFoto
 from django.conf.urls.static import static
 import blog.urls
+from . import routing
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(template_name='index.html'),name='index'),
     path('<str:username>/<pk>', DetalharFoto.as_view(template_name='detail.html'),name='detail'),
     path('accounts/', include('allauth.urls')),
-    path('profile/', include('blog.urls'))
+    path('profile/', include('blog.urls')),
+    path('chat/', include(routing.websocket_urlpatterns)),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
