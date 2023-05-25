@@ -145,7 +145,21 @@ class Update(UpdateView):
     context_object_name = "card"
     form_class=PhotoEditForm
     
-
+    def dispatch(self, request, *args, **kwargs):
+        username = self.kwargs['username']
+        user = get_object_or_404(CustomUser, username=username)
+        if self.request.user != user:
+            return redirect('permission-denied')  # Redirecionar para a página de permissão negada
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username = self.kwargs.get('username')
+        user = CustomUser.objects.get(username=username)
+        context['user'] = user
+        context['userlogado'] = self.request.user
+        return context
+    
     def get_success_url(self):
         username = self.request.user
         return reverse_lazy('profile', kwargs={'username': username})
@@ -155,6 +169,21 @@ class DeletePhoto(DeleteView):
     model = Photo
     context_object_name = "card"
 
+    def dispatch(self, request, *args, **kwargs):
+        username = self.kwargs['username']
+        user = get_object_or_404(CustomUser, username=username)
+        if self.request.user != user:
+            return redirect('permission-denied')  # Redirecionar para a página de permissão negada
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        username = self.kwargs.get('username')
+        user = CustomUser.objects.get(username=username)
+        context['user'] = user
+        context['userlogado'] = self.request.user
+        return context
+    
     def get_success_url(self):
         username = self.request.user
         return reverse_lazy('profile', kwargs={'username': username})

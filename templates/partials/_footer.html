@@ -4,8 +4,9 @@
     {% if userlogado.is_authenticated %}
     <ul class="copyright text-center" style="display: flex; justify-content: space-between">
         <li><a href="{% url 'profile' userlogado.username %}" class="icon fa-solid fa-user"><span class="label">Profile</span></a></li>
-        <li><a href="{% url 'account_logout' %}" class="icon fa-solid fa-power-off"><span class="label">Logout</span></a></li>
         <li><a href="{% url 'index' %}" class="icon fa-solid fa-home"><span class="label">Home</span></a></li>
+        <li><a href="{% url 'index' %}" class="icon fa-solid fa-gear"><span class="label">Home</span></a></li>
+        <li><a href="{% url 'account_logout' %}" class="icon fa-solid fa-power-off"><span class="label">Logout</span></a></li>
     </ul>
         {%else%}
     <div class="form-group text-center">
