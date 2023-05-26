@@ -164,4 +164,4 @@ LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
 ACCOUNT_FORMS = {'signup': 'blog.forms.CustomSignupForm'}
 AUTH_USER_MODEL = 'blog.CustomUser'
-LOGIN_URL = "/accounts/login"
+LOGIN_URL = "account_login"
