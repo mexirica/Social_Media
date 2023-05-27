@@ -29,7 +29,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('profile/', include('blog.urls')),
     path('permission-denied/', TemplateView.as_view(template_name='permission_denied.html'), name='permission-denied'),
-
-
-
+    path('config/', TemplateView.as_view(template_name='config.html'), name='config'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

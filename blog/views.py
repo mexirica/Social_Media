@@ -5,8 +5,9 @@ from .models import Photo, CustomUser
 from .forms import PhotoForm,PhotoEditForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.shortcuts import get_object_or_404, redirect
-
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 class ProfileView(LoginRequiredMixin, ListView):
     template_name = 'profile.html'
@@ -187,3 +188,15 @@ class DeletePhoto(DeleteView):
     def get_success_url(self):
         username = self.request.user
         return reverse_lazy('profile', kwargs={'username': username})
+
+@method_decorator(login_required, name='dispatch')
+class DesativarUsuarioView(View):
+    def get(self,request):
+        return render(request,'desativar.html')
+        
+    def post(self,request):
+        user = request.user
+        user.is_active = False
+        user.save()
+        return HttpResponseRedirect('index')
+    

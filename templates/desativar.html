@@ -1,7 +1,10 @@
 {% extends "account/base.html" %}
 {% load static %}
 {% load i18n %}
-{% block head_title %}{% trans "Change Password" %}{% endblock %}
+{% load account %}
+
+{% block head_title %}Desativar conta{% endblock %}
+
 
 {% block content %}
 <section class="py-5 d-flex justify-content-center align-items-center" style="background-image: url('{% static 'images/bg.jpg' %}'); height: 100vh;">
@@ -11,15 +14,20 @@
                 <div class="d-flex align-items-center justify-content-center h-100"> <!-- Adicione essa div para centralizar o conteúdo verticalmente e horizontalmente -->
                     <!-- CUSTOM BLOCKQUOTE -->
                     <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded">
-                        <h1 class='text-center'>Senha alterada</h1>
 
-    			<p>Sua senha foi alterada com sucesso</p>
 
-                        <a href="{% url 'index' %}" class="form-control btn btn-primary submit d-flex align-items-center justify-content-center">Voltar</a>
+    <p>Tem certeza que deseja desativar sua conta?</p>
+<form method="post" action="{% url 'desativar' %}">
+{% csrf_token %}
+    <button type="submit" class="form-control btn btn-primary submit px-3 mb-3">Desativar</button>
+    
+</form>
+<a href="{% url 'index' %}" class="form-control btn btn-primary submit d-flex align-items-center justify-content-center">Voltar</a>
                     </blockquote><!-- END -->
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 {% endblock %}

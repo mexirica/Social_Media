@@ -1,0 +1,32 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load socialaccount %}
+
+{% block head_title %}{% trans "Sign Up" %}{% endblock %}
+
+{% block content %}
+<body class="img js-fullheight" style="background-image: url('{% static 'images/bg.jpg' %}');">
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h2 class="heading-section">Configurações</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="d-flex align-items-center justify-content-center" style="height: 80vh;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="login-wrap p-0">
+                        <a href="{% url 'desativar' %}" class="form-control btn btn-primary submit d-flex align-items-center justify-content-center mb-5">Desativar conta</a>
+                        <a href="{% url 'account_reset_password' %}" class="form-control btn btn-primary submit d-flex align-items-center justify-content-center mb-5">Mudar senha</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
