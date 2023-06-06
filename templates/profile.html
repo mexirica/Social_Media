@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
 				<!-- Thumbnail -->
 				{% if photos %}
 				<section id="thumbnails">
@@ -23,11 +22,14 @@
 					<section id="thumbnails">
 					<article>
 						<a class="thumbnail" href="{% static 'images/fulls/fundo.jpg'%}" data-position="left center"></a>
-						<h2>Você não tem nenhuma foto</h2>
+						<h2>Não há nenhuma foto postada</h2>
+						{% if user == userlogado %}
 						<p>Poste algumas!</p>
+						{% endif %}
 					</article>
 				</section>
 					{% endif %}
+					
 
 {% endblock content %}
 

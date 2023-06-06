@@ -18,7 +18,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
-from blog.views import IndexView, DetalharFoto
+from blog.views import IndexView, DetalharFoto, CustomLoginView, DesativarUsuarioView
 from django.conf.urls.static import static
 
 
@@ -27,7 +27,10 @@ urlpatterns = [
     path('', IndexView.as_view(template_name='index.html'),name='index'),
     path('<str:username>/<pk>', DetalharFoto.as_view(template_name='detail.html'),name='detail'),
     path('accounts/', include('allauth.urls')),
+    path('desativar', DesativarUsuarioView.as_view(), name='desativar'),
+    path('account_inactive', TemplateView.as_view(template_name='account/account_inactive.html'), name='account_inactive'),
     path('profile/', include('blog.urls')),
     path('permission-denied/', TemplateView.as_view(template_name='permission_denied.html'), name='permission-denied'),
+    path('login/', CustomLoginView.as_view(), name='login'),
     path('config/', TemplateView.as_view(template_name='config.html'), name='config'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

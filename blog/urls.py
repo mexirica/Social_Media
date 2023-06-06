@@ -5,7 +5,7 @@ from blog.views import ProfileView, AddView, Update, DeletePhoto, DesativarUsuar
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('<str:username>/', ProfileView.as_view(template_name='profile.html'), name='profile'),
+    path('<str:username>/', ProfileView.as_view(), name='profile'),
     path('buscar/', TemplateView.as_view(template_name='index.html'),name='buscar'),
     path('<str:username>/add/', AddView.as_view(template_name='crud/add.html'), name='add'),
     path('<str:username>/<pk>/update/', Update.as_view(template_name="crud/edit.html"), name="update"), 

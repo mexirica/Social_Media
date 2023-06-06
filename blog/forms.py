@@ -1,6 +1,5 @@
 from django import forms
 from django.conf import settings
-from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import get_user_model
 from allauth.account.forms import SignupForm
 import logging

@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView, View
+from allauth.account.views import LoginView
 from .models import Photo, CustomUser
 from .forms import PhotoForm,PhotoEditForm
 from django.http import HttpResponseRedirect
@@ -8,6 +9,9 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib.auth import get_user_model
+
+
 
 class ProfileView(LoginRequiredMixin, ListView):
     template_name = 'profile.html'
@@ -27,6 +31,23 @@ class ProfileView(LoginRequiredMixin, ListView):
         context['userlogado'] = self.request.user
         context['user'] = user
         return context
+    
+    def dispatch(self, request, *args, **kwargs):
+        username = kwargs.get('username')
+        user = get_object_or_404(CustomUser, username=username)
+        
+        if not user.is_active:
+            return render(request, "account/account_inactive.html")
+        
+        if request.user.is_authenticated:
+            template = 'profile.html'
+
+
+        context = {
+            'user': user
+        }
+
+        return render(request, template, context)
     
     def follow(self, request, userlogado, user):
         userlogado.following += 1
@@ -198,5 +219,28 @@ class DesativarUsuarioView(View):
         user = request.user
         user.is_active = False
         user.save()
-        return HttpResponseRedirect('index')
+        return HttpResponseRedirect('/')
+
+class CustomLoginView(LoginView):
+    def form_valid(self, form):
+        # Aqui você pode adicionar sua lógica personalizada de autenticação
+        # antes de chamar o método form_valid() da superclasse
+        email = form.cleaned_data['login']
+        
+        User = get_user_model()
+        try:
+            user = User.objects.get(email=email)
+            if not user.is_active:
+                user.is_active = True
+                user.save()
+        except User.DoesNotExist:
+            # Usuário não existe, faça o tratamento necessário
+            pass
+
+
+        # Chamando o método form_valid() da superclasse
+        return super().form_valid(form)
     
+    def get_success_url(self):
+        # Personalize a URL de redirecionamento após o login bem-sucedido
+        return reverse_lazy('index')
